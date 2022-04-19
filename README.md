@@ -1,10 +1,10 @@
 # Exercicios-SQL-AWARI
 
-Trabalhando com as funções de agregação do SQL
+### Trabalhando com as funções de agregação do SQL
 
-Agrupando valores com o GROUP BY
+### Agrupando valores com o GROUP BY
 
-Os tipos de JOIN: Quais são e como usá-los! (SQL SERVER)
+### Os tipos de JOIN: Quais são e como usá-los! (SQL SERVER)
 
 
 
