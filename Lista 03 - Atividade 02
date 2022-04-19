@@ -1,0 +1,13 @@
+SELECT * 
+FROM ( 
+SELECT CUST.customer_unique_id, 
+		ORD.order_id, 
+		ORD.order_approved_at, 
+		SUM(PAY.payment_value) OVER (PARTITION BY ORD.ORDER_ID) VL_COMPRA, 
+		SUM(PAY.payment_value) OVER (PARTITION BY CUST.customer_unique_id) VL_TOTAL_GASTO 
+FROM order_payments PAY 
+JOIN orders ORD ON PAY.order_id = ORD.order_id 
+JOIN customers CUST ON ORD.customer_id = CUST.customer_id 
+GROUP BY ORD.order_id, CUST.customer_unique_id, ORD.order_approved_at 
+) TB 
+WHERE VL_COMPRA <> VL_TOTAL_GASTO 

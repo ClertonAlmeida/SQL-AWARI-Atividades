@@ -1,0 +1,11 @@
+SELECT product_category_name, 
+		VALOR_VENDIDO, 
+		rank() OVER (ORDER BY VALOR_VENDIDO DESC) RANK_VALOR_VENDIDO, 
+		SUM(VALOR_VENDIDO) OVER (ORDER BY VALOR_VENDIDO DESC) SOMA_ACUMULADA 
+FROM( 
+SELECT PRD.product_category_name, 
+		ROUND(SUM(OI.price + OI.freight_value),2) VALOR_VENDIDO 
+FROM products PRD 
+JOIN order_items OI ON PRD.product_id = OI.product_id 
+GROUP BY PRD.product_category_name ) 
+ORDER BY RANK_VALOR_VENDIDO 

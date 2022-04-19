@@ -1,0 +1,11 @@
+CREATE VIEW SELLER_STATS AS 
+SELECT SEL.seller_id, 
+		COUNT(OIT.product_id) QTD_ITENS, 
+		AVG(CAST(julianday(ORD.order_delivered_carrier_date) AS INTEGER) - CAST(julianday(ORD.order_approved_at) AS INTEGER)) MEDIA_TEMPO_POSTAGEM, 
+		COUNT(DISTINCT ORD.ORDER_ID) QTD_PEDIDOS 
+FROM sellers SEL 
+JOIN order_items OIT ON SEL.seller_id = OIT.seller_id 
+JOIN orders ORD ON OIT.order_id = ORD.order_id 
+WHERE order_status IN ('delivered', 'shipped') 
+AND order_approved_at < order_delivered_carrier_date 
+GROUP BY SEL.seller_id; 

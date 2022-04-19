@@ -1,0 +1,10 @@
+SELECT CUS.customer_unique_id,
+	   SUM(OIT.PRICE) VALOR_GASTO,
+	   count(DISTINCT ORD.order_id) QUATIDADE_COMPRAS,
+	   avg(OIT.price) TICKET_MEDIO
+FROM customers CUS
+JOIN orders ORD ON CUS.customer_id = ORD.customer_id
+JOIN order_items OIT ON ORD.order_id = OIT.order_id
+GROUP BY CUS.customer_unique_id
+ORDER BY VALOR_GASTO DESC
+LIMIT 5;

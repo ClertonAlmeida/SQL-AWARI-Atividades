@@ -1,0 +1,10 @@
+SELECT PRD.product_category_name,
+	   SEL.seller_id,
+	   SUM(OIT.PRICE) VALOR_VENDIDO
+FROM sellers SEL
+JOIN order_items OIT ON SEL.seller_id = OIT.seller_id
+JOIN products PRD ON OIT.product_id = PRD.product_id
+GROUP BY PRD.product_category_name,
+		 SEL.seller_id
+HAVING SUM(OIT.PRICE) > 1000
+ORDER BY VALOR_VENDIDO DESC

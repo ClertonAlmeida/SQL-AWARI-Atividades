@@ -1,0 +1,9 @@
+SELECT order_estimated_delivery_date AS DATA_ESTIMADA,
+	   order_delivered_customer_date AS ENTREGA_NO_PRAZO,
+	   TEMPO_ENTREGA
+FROM (
+	SELECT CAST(julianday(order_delivered_customer_date) - julianday(order_approved_at) AS INTEGER) AS TEMPO_ENTREGA,* 
+	FROM orders
+	)
+WHERE order_delivered_customer_date < order_estimated_delivery_date 
+	

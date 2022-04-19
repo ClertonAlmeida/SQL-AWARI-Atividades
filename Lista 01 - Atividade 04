@@ -1,0 +1,2 @@
+SELECT * FROM orders
+WHERE order_approved_at LIKE "2017%";

@@ -1,0 +1,2 @@
+SELECT * FROM order_payments
+WHERE payment_type IN ("boleto", "voucher");

@@ -1,0 +1,2 @@
+SELECT * FROM customers
+WHERE customer_state LIKE "SP%" AND NOT customer_city LIKE "sao paulo%";

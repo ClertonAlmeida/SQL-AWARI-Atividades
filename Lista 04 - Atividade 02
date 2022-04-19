@@ -1,0 +1,17 @@
+SELECT customer_unique_id, 
+(VALOR_PAGTO*0.10) AS VLR_CUPOM 
+FROM( SELECT *, 
+	LEAD(VALOR_PAGTO) OVER (PARTITION BY customer_unique_id ORDER BY ORDEM_COMPRA) COMPRA_ANTERIOR 
+	FROM( SELECT CUST.customer_unique_id, 
+				ORD.order_approved_at, 
+				SUM(payment_value) AS VALOR_PAGTO, 
+				rank() OVER (PARTITION BY CUST.customer_unique_id ORDER BY ORD.order_approved_at DESC) ORDEM_COMPRA 
+		FROM customers CUST 
+		JOIN orders ORD ON CUST.customer_id = ORD.customer_id 
+		JOIN order_payments PAY ON ORD.order_id = PAY.order_id 
+		WHERE order_status IN ('delivered', 'shipped') 
+		GROUP BY CUST.customer_unique_id, ORD.order_approved_at 
+		) TB 
+	WHERE ORDEM_COMPRA <= 2 
+) TB 
+WHERE COMPRA_ANTERIOR >= VALOR_PAGTO 

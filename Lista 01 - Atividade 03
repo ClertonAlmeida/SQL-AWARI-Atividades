@@ -1,0 +1,2 @@
+SELECT * FROM order_reviews
+WHERE review_comment_message IS NULL;
